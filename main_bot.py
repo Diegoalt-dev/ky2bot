@@ -3,8 +3,10 @@ import logging
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 import random
-
-updater = Updater(token='1595251301:AAHYRJnjRfWgVPccN1gmmqpf-LfMGaeY0Y8', use_context = True)
+import os
+PORT = int(os.environ.get('PORT',5000))
+TOKEN = '1595251301:AAHYRJnjRfWgVPccN1gmmqpf-LfMGaeY0Y8'
+updater = Updater(token=TOKEN, use_context = True)
 dispatcher = updater.dispatcher
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
@@ -13,6 +15,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente argumento", "Sin duda lo mejor que he oído desde Vietnam","Interesante pero discutible", "No tengo el suficiente conocimiento del tema así que le doy la razón", "No estoy de acuerdo pero no creo que discutirlo nos lleve a algo","Me parece un argumento totalmente válido", "Comparto la opinión del compañero", "Efectivamente", "Un comentario acertado para alguien de la nacional"]
 miembros = []
+
 frases = ["No hay jungla", "mancos todos", "no vuelvo a venirme con Nicolás soporte", "Diego regaló la partida otra vez", "No hay equipo", "Cómprense un par de manos mancos hptas"]
 ## Funciones
 def start(update,context):
@@ -56,6 +59,20 @@ def lol(update,context):
     linea = random.randint(0,len(frases)-1)
     context.bot.send_message(chat_id=update.effective_chat.id, text = frases[linea])
 
+def lineas(update,context):
+    jugadores = update.message.text
+    jugadores = jugadores[8:]
+    print(jugadores)
+    
+    jugadores = jugadores.split(' ')
+    random.shuffle(jugadores)
+    print("jugadores: ", jugadores)
+    posiciones = " Top: {} \n Jungla: {} \n Mid: {} \n Sup: {} \n ADC: {}".format(jugadores[0],jugadores[1],jugadores[2],jugadores[3],jugadores[4]) 
+    
+    context.bot.send_message(chat_id=update.effective_chat.id, text = posiciones)
+
+
+
 ## Handler
 start_handler = CommandHandler('start',start)
 dispatcher.add_handler(start_handler)
@@ -78,9 +95,19 @@ dispatcher.add_handler(gei_handler)
 lol_handler = CommandHandler('lol', lol)
 dispatcher.add_handler(lol_handler)
 
+lineas_handler = CommandHandler('lineas', lineas)
+dispatcher.add_handler(lineas_handler)
+
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
 
 
 
 updater.start_polling()
+'''
+updater.start_webhook(listen="0.0.0.0",
+                          port=int(PORT),
+                          url_path=TOKEN)
+updater.bot.setWebhook('https://yourherokuappname.herokuapp.com/' + TOKEN)
+'''
+updater.idle()
