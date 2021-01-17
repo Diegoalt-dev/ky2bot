@@ -71,7 +71,8 @@ def lineas(update,context):
     
     context.bot.send_message(chat_id=update.effective_chat.id, text = posiciones)
 
-
+def imagen(update,context):
+    context.bot.sendPhoto(chat_id = update.effective_chat.id, photo = 'https://www.hola.com/imagenes/estar-bien/20190426141097/cerebro-perros-memoria-cs/0-672-261/cerebroperro-t.jpg?filter=w600&filter=ds75')
 
 ## Handler
 start_handler = CommandHandler('start',start)
@@ -97,6 +98,9 @@ dispatcher.add_handler(lol_handler)
 
 lineas_handler = CommandHandler('lineas', lineas)
 dispatcher.add_handler(lineas_handler)
+
+imagen_handler = CommandHandler('imagen',imagen)
+dispatcher.add_handler(imagen_handler)
 
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
