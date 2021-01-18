@@ -75,6 +75,7 @@ def imagen(update,context):
     context.bot.sendPhoto(chat_id = update.effective_chat.id, photo = 'https://www.hola.com/imagenes/estar-bien/20190426141097/cerebro-perros-memoria-cs/0-672-261/cerebroperro-t.jpg?filter=w600&filter=ds75')
 
 def campeon(update,context):
+    dato = update.message.text
     dato = dato[9:]
     numero = str(random.randint(1,int(dato)))
     context.bot.send_message(chat_id=update.effective_chat.id, text = numero)
