@@ -107,11 +107,13 @@ dispatcher.add_handler(lineas_handler)
 imagen_handler = CommandHandler('imagen',imagen)
 dispatcher.add_handler(imagen_handler)
 
+campeon_handler = CommandHandler('campeon',campeon)
+dispatcher.add_handler(campeon_handler)
+
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
 
-campeon_handler = CommandHandler('campeon',campeon)
-dispatcher.add_handler(campeon_handler)
+
 
 
 
