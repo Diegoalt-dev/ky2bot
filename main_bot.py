@@ -4,6 +4,20 @@ from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 import random
 import os
+import mysql.connector
+kydb = mysql.connector.connect(
+    host = "bjngncktssejoh2aveqb-mysql.services.clever-cloud.com",
+    user = "u46ncc7myfzsh8zr",
+    password = "BVK9GOH4hnPr7PB9QcCp",
+    database = 'bjngncktssejoh2aveqb'
+)
+
+kycursor = kydb.cursor()
+kycursor.execute("SELECT url FROM url_imag WHERE tipo = 'saludo'")
+resultado = kycursor.fetchall()
+for x in resultado:
+    print(x)
+    
 PORT = int(os.environ.get('PORT',5000))
 TOKEN = '1595251301:AAHYRJnjRfWgVPccN1gmmqpf-LfMGaeY0Y8'
 updater = Updater(token=TOKEN, use_context = True)
