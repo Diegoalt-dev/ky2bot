@@ -85,8 +85,8 @@ def lineas(update,context):
     
     context.bot.send_message(chat_id=update.effective_chat.id, text = posiciones)
 
-def imagen(update,context):
-    num = random.randint(1,10)
+def saludo(update,context):
+    num = random.randint(0,9)
     context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0])
 
 def campeon(update,context):
@@ -120,8 +120,8 @@ dispatcher.add_handler(lol_handler)
 lineas_handler = CommandHandler('lineas', lineas)
 dispatcher.add_handler(lineas_handler)
 
-imagen_handler = CommandHandler('imagen',imagen)
-dispatcher.add_handler(imagen_handler)
+saludo_handler = CommandHandler('saludo',saludo)
+dispatcher.add_handler(saludo_handler)
 
 campeon_handler = CommandHandler('campeon',campeon)
 dispatcher.add_handler(campeon_handler)
