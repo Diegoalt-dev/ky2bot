@@ -87,7 +87,7 @@ def lineas(update,context):
 
 def imagen(update,context):
     num = random.randint(1,10)
-    context.bot.sendPhoto(chat_id = update.effective_chat.id, photo = resultado[num][0])
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, photo = resultado[num][0])
 
 def campeon(update,context):
     dato = update.message.text
