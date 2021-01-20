@@ -16,8 +16,7 @@ kydb = mysql.connector.connect(
 kycursor = kydb.cursor()
 kycursor.execute("SELECT url FROM url_imag WHERE tipo = 'saludo'")
 resultado = kycursor.fetchall()
-for x in resultado:
-    print(x)
+
 
 PORT = int(os.environ.get('PORT',5000))
 TOKEN = '1595251301:AAHYRJnjRfWgVPccN1gmmqpf-LfMGaeY0Y8'
@@ -87,7 +86,7 @@ def lineas(update,context):
     context.bot.send_message(chat_id=update.effective_chat.id, text = posiciones)
 
 def imagen(update,context):
-    context.bot.sendPhoto(chat_id = update.effective_chat.id, photo = 'https://www.hola.com/imagenes/estar-bien/20190426141097/cerebro-perros-memoria-cs/0-672-261/cerebroperro-t.jpg?filter=w600&filter=ds75')
+    context.bot.sendPhoto(chat_id = update.effective_chat.id, photo = resultado[0][0])
 
 def campeon(update,context):
     dato = update.message.text
