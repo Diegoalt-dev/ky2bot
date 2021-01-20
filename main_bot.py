@@ -27,7 +27,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 ##Data
 
-resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente argumento", "Sin duda lo mejor que he oído desde Vietnam","Interesante pero discutible", "No tengo el suficiente conocimiento del tema así que le doy la razón", "No estoy de acuerdo pero no creo que discutirlo nos lleve a algo","Me parece un argumento totalmente válido", "Comparto la opinión del compañero", "Efectivamente", "Un comentario acertado para alguien de la nacional"]
+resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente argumento", "Sin duda lo mejor que he oído desde Vietnam","Interesante pero discutible", "No tengo el suficiente conocimiento del tema así que le doy la razón", "No estoy de acuerdo pero no creo que discutirlo nos lleve a algo","Me parece un argumento totalmente válido", "Comparto la opinión del compañero", "Efectivamente", "Un comentario acertado para alguien de la nacional", "Me pareció interesante, sobre todo la parte en la que menciona a Palestina"]
 miembros = []
 
 frases = ["No hay jungla", "mancos todos", "no vuelvo a venirme con Nicolás soporte", "Diego regaló la partida otra vez", "No hay equipo", "Cómprense un par de manos mancos hptas"]
@@ -85,9 +85,13 @@ def lineas(update,context):
     
     context.bot.send_message(chat_id=update.effective_chat.id, text = posiciones)
 
-def saludo(update,context):
+def hi(update,context):
     num = random.randint(0,9)
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0])
+    kycursor = kydb.cursor()
+    quer = "SELECT url FROM url_imag WHERE tipo = 'saludo' AND id = "+str(num+1)
+    kycursor.execute(quer)
+    resultado = kycursor.fetchall()
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[0][0])
 
 def campeon(update,context):
     dato = update.message.text
@@ -120,7 +124,7 @@ dispatcher.add_handler(lol_handler)
 lineas_handler = CommandHandler('lineas', lineas)
 dispatcher.add_handler(lineas_handler)
 
-saludo_handler = CommandHandler('saludo',saludo)
+saludo_handler = CommandHandler('hi',hi)
 dispatcher.add_handler(saludo_handler)
 
 campeon_handler = CommandHandler('campeon',campeon)
