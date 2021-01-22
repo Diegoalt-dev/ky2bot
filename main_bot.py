@@ -111,6 +111,9 @@ def campeon(update,context):
     numero = str(random.randint(1,int(dato)))
     context.bot.send_message(chat_id=update.effective_chat.id, text = numero)
 
+def tw(update,context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text = "THAT'S WHAT SHE SAID")
+
 ## Handler
 start_handler = CommandHandler('start',start)
 dispatcher.add_handler(start_handler)
@@ -144,6 +147,9 @@ dispatcher.add_handler(campeon_handler)
 
 act_db_handler = CommandHandler('actdb',actdb)
 dispatcher.add_handler(act_db_handler)
+
+tw_handler = CommandHandler('tw',tw)
+dispatcher.add_handler(tw_handler)
 
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
