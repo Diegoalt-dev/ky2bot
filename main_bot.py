@@ -92,12 +92,17 @@ def hi(update,context):
     context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[0][0])
 
 def actdb(update,context):
-    kydb = mysql.connector.connect(
-    host = "bjngncktssejoh2aveqb-mysql.services.clever-cloud.com",
-    user = "u46ncc7myfzsh8zr",
-    password = "BVK9GOH4hnPr7PB9QcCp",
-    database = 'bjngncktssejoh2aveqb'
-    )
+    try:
+        kydb = mysql.connector.connect(
+        host = "bjngncktssejoh2aveqb-mysql.services.clever-cloud.com",
+        user = "u46ncc7myfzsh8zr",
+        password = "BVK9GOH4hnPr7PB9QcCp",
+        database = 'bjngncktssejoh2aveqb'
+        )
+        update.message.reply_text(text = "Base de datos reconectada", quote = True)
+    except:
+        update.message.reply_text(text = "Error en reconexión a base de datos", quote = True)
+
 
 
 def campeon(update,context):
