@@ -13,9 +13,7 @@ kydb = mysql.connector.connect(
     database = 'bjngncktssejoh2aveqb'
 )
 
-kycursor = kydb.cursor()
-kycursor.execute("SELECT url FROM url_imag WHERE tipo = 'saludo'")
-resultado = kycursor.fetchall()
+
 
 
 PORT = int(os.environ.get('PORT',5000))
@@ -93,6 +91,15 @@ def hi(update,context):
     resultado = kycursor.fetchall()
     context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[0][0])
 
+def actdb(update,context):
+    kydb = mysql.connector.connect(
+    host = "bjngncktssejoh2aveqb-mysql.services.clever-cloud.com",
+    user = "u46ncc7myfzsh8zr",
+    password = "BVK9GOH4hnPr7PB9QcCp",
+    database = 'bjngncktssejoh2aveqb'
+    )
+
+
 def campeon(update,context):
     dato = update.message.text
     dato = dato[9:]
@@ -129,6 +136,9 @@ dispatcher.add_handler(saludo_handler)
 
 campeon_handler = CommandHandler('campeon',campeon)
 dispatcher.add_handler(campeon_handler)
+
+act_db_handler = CommandHandler('actdb',actdb)
+dispatcher.add_handler(act_db_handler)
 
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
