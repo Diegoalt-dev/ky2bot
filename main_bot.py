@@ -101,7 +101,7 @@ def hit(update,context):
     golpeado = context.args
     num = random.randint(0,len(resultado_hit)-1)
     print("golpe "+ str(num) +" escogido")
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {} !".format(nombre,golpeado))
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {} !".format(nombre,golpeado[0]))
 
 def actdb(update,context):
     try:
