@@ -44,6 +44,7 @@ def echo(update,context):
     if first_name is not None and first_name not in miembros:
         miembros.append(first_name)
     print(miembros)
+
     #context.bot.send_message(chat_id=update.effective_chat.id,text=update.message.text)
 
 
@@ -86,7 +87,8 @@ def lineas(update,context):
 
 def hi(update,context):
     num = random.randint(0,len(resultado)-1)
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0])
+    print("saludo "+ str(num) +" escogido")
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "Esto es un subtitulo")
 
 def actdb(update,context):
     try:
