@@ -14,8 +14,13 @@ kydb = mysql.connector.connect(
 )
 kycursor = kydb.cursor()
 quer_sal = "SELECT url FROM url_imag WHERE tipo = 'saludo'"
+quer_hit = "SELECT url FROM url_imag WHERE tipo = 'golpe'"
 kycursor.execute(quer_sal)
 resultado = kycursor.fetchall()
+kycursor.execute(quer_hit)
+resultado_hit = kycursor.fetchall()
+
+
 
 PORT = int(os.environ.get('PORT',5000))
 TOKEN = '1595251301:AAHYRJnjRfWgVPccN1gmmqpf-LfMGaeY0Y8'
@@ -89,7 +94,14 @@ def hi(update,context):
     nombre = update.message.from_user.first_name
     num = random.randint(0,len(resultado)-1)
     print("saludo "+ str(num) +" escogido")
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "{} Ha saludado a todos!".format(nombre))
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "{} ha saludado a todos!".format(nombre))
+
+def hit(update,context):
+    nombre = update.message.from_user.first_name
+    golpeado = context.args
+    num = random.randint(0,len(resultado_hit)-1)
+    print("golpe "+ str(num) +" escogido")
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {} !".format(nombre,golpeado))
 
 def actdb(update,context):
     try:
@@ -100,9 +112,10 @@ def actdb(update,context):
         database = 'bjngncktssejoh2aveqb'
         )
         kycursor = kydb.cursor()
-        quer_sal = "SELECT url FROM url_imag WHERE tipo = 'saludo'"
         kycursor.execute(quer_sal)
         resultado = kycursor.fetchall()
+        kycursor.execute(quer_hit)
+        resultado_hit = kycursor.fetchall()
         update.message.reply_text(text = "Base de datos reconectada", quote = True)
     except:
         update.message.reply_text(text = "Error en reconexión a base de datos", quote = True)
@@ -145,6 +158,9 @@ dispatcher.add_handler(lineas_handler)
 
 saludo_handler = CommandHandler('hi',hi)
 dispatcher.add_handler(saludo_handler)
+
+hit_handler = CommandHandler('hit',hit)
+dispatcher.add_handler(hit_handler)
 
 campeon_handler = CommandHandler('campeon',campeon)
 dispatcher.add_handler(campeon_handler)
