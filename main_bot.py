@@ -86,9 +86,10 @@ def lineas(update,context):
     context.bot.send_message(chat_id=update.effective_chat.id, text = posiciones)
 
 def hi(update,context):
+    nombre = update.message.from_user.first_name
     num = random.randint(0,len(resultado)-1)
     print("saludo "+ str(num) +" escogido")
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "Esto es un subtitulo")
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "{} Ha saludado a todos!".format(nombre))
 
 def actdb(update,context):
     try:
