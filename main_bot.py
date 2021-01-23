@@ -12,6 +12,7 @@ kydb = mysql.connector.connect(
     password = "BVK9GOH4hnPr7PB9QcCp",
     database = 'bjngncktssejoh2aveqb'
 )
+kycursor = kydb.cursor()
 
 
 
