@@ -13,9 +13,9 @@ kydb = mysql.connector.connect(
     database = 'bjngncktssejoh2aveqb'
 )
 kycursor = kydb.cursor()
-
-
-
+quer_sal = "SELECT url FROM url_imag WHERE tipo = 'saludo'"
+kycursor.execute(quer_sal)
+resultado = kycursor.fetchall()
 
 PORT = int(os.environ.get('PORT',5000))
 TOKEN = '1595251301:AAHYRJnjRfWgVPccN1gmmqpf-LfMGaeY0Y8'
@@ -85,11 +85,8 @@ def lineas(update,context):
     context.bot.send_message(chat_id=update.effective_chat.id, text = posiciones)
 
 def hi(update,context):
-    num = random.randint(0,9)
-    quer = "SELECT url FROM url_imag WHERE tipo = 'saludo' AND id = "+str(num+1)
-    kycursor.execute(quer)
-    resultado = kycursor.fetchall()
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[0][0])
+    num = random.randint(0,len(resultado)-1)
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0])
 
 def actdb(update,context):
     try:
@@ -100,6 +97,9 @@ def actdb(update,context):
         database = 'bjngncktssejoh2aveqb'
         )
         kycursor = kydb.cursor()
+        quer_sal = "SELECT url FROM url_imag WHERE tipo = 'saludo'"
+        kycursor.execute(quer_sal)
+        resultado = kycursor.fetchall()
         update.message.reply_text(text = "Base de datos reconectada", quote = True)
     except:
         update.message.reply_text(text = "Error en reconexión a base de datos", quote = True)

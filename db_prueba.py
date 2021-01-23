@@ -9,7 +9,7 @@ kydb = mysql.connector.connect(
 kycursor = kydb.cursor()
 kycursor.execute("SELECT url FROM url_imag WHERE tipo = 'saludo'")
 resultado = kycursor.fetchall()
-print(resultado[10][0])
+print(len(resultado))
 
     
 
