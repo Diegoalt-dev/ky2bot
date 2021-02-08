@@ -131,6 +131,15 @@ def campeon(update,context):
 def tw(update,context):
     context.bot.send_message(chat_id=update.effective_chat.id, text = "THAT'S WHAT SHE SAID")
 
+def ball(update,context):
+    num = random.randint(0,2)
+    if num == 0:
+        context.bot.send_message(chat_id=update.effective_chat.id, text = "Si.")
+    elif num == 1:
+        context.bot.send_message(chat_id=update.effective_chat.id, text = "No.")
+    else:
+        context.bot.send_message(chat_id=update.effective_chat.id, text = "Intenta de nuevo.")
+
 ## Handler
 start_handler = CommandHandler('start',start)
 dispatcher.add_handler(start_handler)
@@ -170,6 +179,9 @@ dispatcher.add_handler(act_db_handler)
 
 tw_handler = CommandHandler('tw',tw)
 dispatcher.add_handler(tw_handler)
+
+ball_handler = CommandHandler('8ball',ball)
+dispatcher.add_handler(ball_handler)
 
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
