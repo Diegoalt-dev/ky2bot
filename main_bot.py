@@ -4,8 +4,26 @@ from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 import random
 import os
-PORT = int(os.environ.get('PORT',5000))
-TOKEN = '1595251301:AAHYRJnjRfWgVPccN1gmmqpf-LfMGaeY0Y8'
+
+import mysql.connector
+kydb = mysql.connector.connect(
+    host = "bjngncktssejoh2aveqb-mysql.services.clever-cloud.com",
+    user = "u46ncc7myfzsh8zr",
+    password = "BVK9GOH4hnPr7PB9QcCp",
+    database = 'bjngncktssejoh2aveqb'
+)
+kycursor = kydb.cursor()
+quer_sal = "SELECT url FROM url_imag WHERE tipo = 'saludo'"
+quer_hit = "SELECT url FROM url_imag WHERE tipo = 'golpe'"
+kycursor.execute(quer_sal)
+resultado = kycursor.fetchall()
+kycursor.execute(quer_hit)
+resultado_hit = kycursor.fetchall()
+
+
+
+
+TOKEN = '1454948091:AAEj3hxhTUbMluzhNEIyuTCoLd7HWnX7DwM'
 updater = Updater(token=TOKEN, use_context = True)
 dispatcher = updater.dispatcher
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -13,7 +31,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 ##Data
 
-resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente argumento", "Sin duda lo mejor que he oído desde Vietnam","Interesante pero discutible", "No tengo el suficiente conocimiento del tema así que le doy la razón", "No estoy de acuerdo pero no creo que discutirlo nos lleve a algo","Me parece un argumento totalmente válido", "Comparto la opinión del compañero", "Efectivamente", "Un comentario acertado para alguien de la nacional"]
+resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente argumento", "Sin duda lo mejor que he oído desde Vietnam","Interesante pero discutible", "No tengo el suficiente conocimiento del tema así que le doy la razón", "No estoy de acuerdo pero no creo que discutirlo nos lleve a algo","Me parece un argumento totalmente válido", "Comparto la opinión del compañero", "Efectivamente", "Un comentario acertado para alguien de la nacional", "Me pareció interesante, sobre todo la parte en la que menciona a Palestina"]
 miembros = []
 
 frases = ["No hay jungla", "mancos todos", "no vuelvo a venirme con Nicolás soporte", "Diego regaló la partida otra vez", "No hay equipo", "Cómprense un par de manos mancos hptas"]
@@ -31,6 +49,7 @@ def echo(update,context):
     if first_name is not None and first_name not in miembros:
         miembros.append(first_name)
     print(miembros)
+
     #context.bot.send_message(chat_id=update.effective_chat.id,text=update.message.text)
 
 
@@ -71,7 +90,46 @@ def lineas(update,context):
     
     context.bot.send_message(chat_id=update.effective_chat.id, text = posiciones)
 
+def hi(update,context):
+    nombre = update.message.from_user.first_name
+    num = random.randint(0,len(resultado)-1)
+    print("saludo "+ str(num) +" escogido")
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "{} ha saludado a todos!".format(nombre))
 
+def hit(update,context):
+    nombre = update.message.from_user.first_name
+    golpeado = context.args
+    num = random.randint(0,len(resultado_hit)-1)
+    print("golpe "+ str(num) +" escogido")
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {} !".format(nombre,golpeado[0]))
+
+def actdb(update,context):
+    try:
+        kydb = mysql.connector.connect(
+        host = "bjngncktssejoh2aveqb-mysql.services.clever-cloud.com",
+        user = "u46ncc7myfzsh8zr",
+        password = "BVK9GOH4hnPr7PB9QcCp",
+        database = 'bjngncktssejoh2aveqb'
+        )
+        kycursor = kydb.cursor()
+        kycursor.execute(quer_sal)
+        resultado = kycursor.fetchall()
+        kycursor.execute(quer_hit)
+        resultado_hit = kycursor.fetchall()
+        update.message.reply_text(text = "Base de datos reconectada", quote = True)
+    except:
+        update.message.reply_text(text = "Error en reconexión a base de datos", quote = True)
+
+
+
+def campeon(update,context):
+    dato = update.message.text
+    dato = dato[9:]
+    numero = str(random.randint(1,int(dato)))
+    context.bot.send_message(chat_id=update.effective_chat.id, text = numero)
+
+def tw(update,context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text = "THAT'S WHAT SHE SAID")
 
 ## Handler
 start_handler = CommandHandler('start',start)
@@ -98,8 +156,25 @@ dispatcher.add_handler(lol_handler)
 lineas_handler = CommandHandler('lineas', lineas)
 dispatcher.add_handler(lineas_handler)
 
+saludo_handler = CommandHandler('hi',hi)
+dispatcher.add_handler(saludo_handler)
+
+hit_handler = CommandHandler('hit',hit)
+dispatcher.add_handler(hit_handler)
+
+campeon_handler = CommandHandler('campeon',campeon)
+dispatcher.add_handler(campeon_handler)
+
+act_db_handler = CommandHandler('actdb',actdb)
+dispatcher.add_handler(act_db_handler)
+
+tw_handler = CommandHandler('tw',tw)
+dispatcher.add_handler(tw_handler)
+
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
+
+
 
 
 
@@ -108,6 +183,7 @@ updater.start_polling()
 updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
                           url_path=TOKEN)
-updater.bot.setWebhook('https://yourherokuappname.herokuapp.com/' + TOKEN)
-'''
+updater.bot.setWebhook('https://ky2bot.herokuapp.com/' + TOKEN)
+
 updater.idle()
+'''
