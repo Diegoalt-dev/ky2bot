@@ -33,7 +33,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente argumento", "Sin duda lo mejor que he oído desde Vietnam","Interesante pero discutible", "No tengo el suficiente conocimiento del tema así que le doy la razón", "No estoy de acuerdo pero no creo que discutirlo nos lleve a algo","Me parece un argumento totalmente válido", "Comparto la opinión del compañero", "Efectivamente", "Un comentario acertado para alguien de la nacional", "Me pareció interesante, sobre todo la parte en la que menciona a Palestina"]
 miembros = []
-
+bola8 = ["En mi opinión, sí","Es cierto","Probablemente","Todo apunta a que sí","Sin duda","Si","Definitivamente","Pregunta en otro momento", "Intenta de nuevo","Será mejor que no te lo diga ahora","No puedo predecirlo ahora","Puede ser","No cuentes con ello","No","Muy dudoso","Mis fuentes me dicen que no","Las perspectivas no son buenas"]
 frases = ["No hay jungla", "mancos todos", "no vuelvo a venirme con Nicolás soporte", "Diego regaló la partida otra vez", "No hay equipo", "Cómprense un par de manos mancos hptas"]
 ## Funciones
 def start(update,context):
@@ -120,8 +120,6 @@ def actdb(update,context):
     except:
         update.message.reply_text(text = "Error en reconexión a base de datos", quote = True)
 
-
-
 def campeon(update,context):
     dato = update.message.text
     dato = dato[9:]
@@ -132,13 +130,8 @@ def tw(update,context):
     context.bot.send_message(chat_id=update.effective_chat.id, text = "THAT'S WHAT SHE SAID")
 
 def ball(update,context):
-    num = random.randint(0,2)
-    if num == 0:
-        context.bot.send_message(chat_id=update.effective_chat.id, text = "Si.")
-    elif num == 1:
-        context.bot.send_message(chat_id=update.effective_chat.id, text = "No.")
-    else:
-        context.bot.send_message(chat_id=update.effective_chat.id, text = "Intenta de nuevo.")
+    Pronostico = random.randint(0,len(bola8)-1)
+    context.bot.send_message(chat_id=update.effective_chat.id, text = bola8[Pronostico])
 
 ## Handler
 start_handler = CommandHandler('start',start)
