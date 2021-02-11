@@ -143,49 +143,49 @@ updater = Updater(token=TOKEN, use_context = True)
 dispatcher = updater.dispatcher
 
 ## Handler
-start_handler = CommandHandler('start', ui.start)
+start_handler = CommandHandler('start', k.start)
 dispatcher.add_handler(start_handler)
 
-echo_handler = MessageHandler((~Filters.command), ui.echo)
+echo_handler = MessageHandler((~Filters.command), k.echo)
 dispatcher.add_handler(echo_handler)
 
-caps_handler = CommandHandler('caps', ui.caps)
+caps_handler = CommandHandler('caps', k.caps)
 dispatcher.add_handler(caps_handler)
 
-resp_pablo_handler = CommandHandler('pablo', ui.resp_pablo)
+resp_pablo_handler = CommandHandler('pablo', k.resp_pablo)
 dispatcher.add_handler(resp_pablo_handler)
 
-lista_miembros_handler = CommandHandler('lista', ui.lista_miembros)
+lista_miembros_handler = CommandHandler('lista', k.lista_miembros)
 dispatcher.add_handler(lista_miembros_handler)
 
-gei_handler = CommandHandler('gei', ui.gei)
+gei_handler = CommandHandler('gei', k.gei)
 dispatcher.add_handler(gei_handler)
 
-lol_handler = CommandHandler('lol', ui.lol)
+lol_handler = CommandHandler('lol', k.lol)
 dispatcher.add_handler(lol_handler)
 
-lineas_handler = CommandHandler('lineas', ui.lineas)
+lineas_handler = CommandHandler('lineas', k.lineas)
 dispatcher.add_handler(lineas_handler)
 
-saludo_handler = CommandHandler('hi', ui.hi)
+saludo_handler = CommandHandler('hi', k.hi)
 dispatcher.add_handler(saludo_handler)
 
-hit_handler = CommandHandler('hit', ui.hit)
+hit_handler = CommandHandler('hit', k.hit)
 dispatcher.add_handler(hit_handler)
 
-kiss_handler = CommandHandler('kiss', ui.kiss)
+kiss_handler = CommandHandler('kiss', k.kiss)
 dispatcher.add_handler(kiss_handler)
 
-campeon_handler = CommandHandler('campeon', ui.campeon)
+campeon_handler = CommandHandler('campeon', k.campeon)
 dispatcher.add_handler(campeon_handler)
 
-tw_handler = CommandHandler('tw', ui.tw)
+tw_handler = CommandHandler('tw', k.tw)
 dispatcher.add_handler(tw_handler)
 
-ball_handler = CommandHandler('8ball', ui.ball)
+ball_handler = CommandHandler('8ball', k.ball)
 dispatcher.add_handler(ball_handler)
 
-unknown_handler = MessageHandler (Filters.command, ui.unknown)
+unknown_handler = MessageHandler (Filters.command, k.unknown)
 dispatcher.add_handler(unknown_handler)
 
 updater.start_webhook(listen="0.0.0.0",
