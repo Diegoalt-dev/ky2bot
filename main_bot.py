@@ -4,8 +4,8 @@ from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 import random
 import os
-
 import mysql.connector
+
 kydb = mysql.connector.connect(
     host = "bjngncktssejoh2aveqb-mysql.services.clever-cloud.com",
     user = "u46ncc7myfzsh8zr",
@@ -15,12 +15,13 @@ kydb = mysql.connector.connect(
 kycursor = kydb.cursor()
 quer_sal = "SELECT url FROM url_imag WHERE tipo = 'saludo'"
 quer_hit = "SELECT url FROM url_imag WHERE tipo = 'golpe'"
+quer_kiss = "SELECT url FROM url_imag WHERE tipo = 'beso'"
 kycursor.execute(quer_sal)
 resultado = kycursor.fetchall()
 kycursor.execute(quer_hit)
 resultado_hit = kycursor.fetchall()
-
-
+kycursor.execute(quer_kiss)
+resultado_kiss = kycursor.fetchall()
 
 PORT = int(os.environ.get('PORT',5000))
 TOKEN = '1595251301:AAHYRJnjRfWgVPccN1gmmqpf-LfMGaeY0Y8'
@@ -30,18 +31,15 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                      level=logging.INFO)
 
 ##Data
-
 resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente argumento", "Sin duda lo mejor que he oído desde Vietnam","Interesante pero discutible", "No tengo el suficiente conocimiento del tema así que le doy la razón", "No estoy de acuerdo pero no creo que discutirlo nos lleve a algo","Me parece un argumento totalmente válido", "Comparto la opinión del compañero", "Efectivamente", "Un comentario acertado para alguien de la nacional", "Me pareció interesante, sobre todo la parte en la que menciona a Palestina"]
 miembros = []
 bola8 = ["En mi opinión, sí","Es cierto","Probablemente","Todo apunta a que sí","Sin duda","Si","Definitivamente","Pregunta en otro momento", "Intenta de nuevo","Será mejor que no te lo diga ahora","No puedo predecirlo ahora","Puede ser","No cuentes con ello","No","Muy dudoso","Mis fuentes me dicen que no","Las perspectivas no son buenas"]
 frases = ["No hay jungla", "mancos todos", "no vuelvo a venirme con Nicolás soporte", "Diego regaló la partida otra vez", "No hay equipo", "Cómprense un par de manos mancos hptas"]
+
 ## Funciones
 def start(update,context):
-    chat_id = update.message.chat_id
     first_name = update.message.chat.first_name
-    last_name = update.message.chat.last_name
-    username = update.message.chat.username
-    mensaje = "hola {} soy un bot".format(first_name)
+    mensaje = "hola {} soy ky2bot, el mejor de to2 los bots".format(first_name)
     context.bot.send_message(chat_id=update.effective_chat.id,text=mensaje)
 
 def echo(update,context):
@@ -49,9 +47,6 @@ def echo(update,context):
     if first_name is not None and first_name not in miembros:
         miembros.append(first_name)
     print(miembros)
-
-    #context.bot.send_message(chat_id=update.effective_chat.id,text=update.message.text)
-
 
 def caps(update, context):
     text_caps = ' '.join(context.args).upper()
@@ -67,7 +62,6 @@ def resp_pablo(update,context):
 def lista_miembros(update,context):
     texto = ' \n'.join(miembros)
     update.message.reply_text(text = texto, quote = True)
-    #context.bot.send_message(chat_id=update.effective_chat.id, text = texto)
 
 def gei(update,context):
     miembro = random.randint(0,len(miembros)-1)
@@ -82,26 +76,31 @@ def lineas(update,context):
     jugadores = update.message.text
     jugadores = jugadores[8:]
     print(jugadores)
-    
     jugadores = jugadores.split(' ')
     random.shuffle(jugadores)
     print("jugadores: ", jugadores)
-    posiciones = " Top: {} \n Jungla: {} \n Mid: {} \n Sup: {} \n ADC: {}".format(jugadores[0],jugadores[1],jugadores[2],jugadores[3],jugadores[4]) 
-    
+    posiciones = " Top: {} \n Jungla: {} \n Mid: {} \n Sup: {} \n ADC: {}".format(jugadores[0],jugadores[1],jugadores[2],jugadores[3],jugadores[4])
     context.bot.send_message(chat_id=update.effective_chat.id, text = posiciones)
 
 def hi(update,context):
     nombre = update.message.from_user.first_name
     num = random.randint(0,len(resultado)-1)
     print("saludo "+ str(num) +" escogido")
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "{} ha saludado a todos!".format(nombre))
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "¡{} ha saludado a todos!".format(nombre))
 
 def hit(update,context):
     nombre = update.message.from_user.first_name
     golpeado = context.args
     num = random.randint(0,len(resultado_hit)-1)
     print("golpe "+ str(num) +" escogido")
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {} !".format(nombre,golpeado[0]))
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "¡{} ha golpeado a {}!".format(nombre,golpeado[0]))
+
+def kiss(update,context):
+    nombre = update.message.from_user.first_name
+    besito = context.args
+    num = random.randint(0,len(resultado_kiss)-1)
+    print("beso "+ str(num) +" escogido")
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_bis[num][0], caption = "¡{} ha besado a {}! <3".format(nombre,besito[0]))
 
 def actdb(update,context):
     try:
@@ -163,6 +162,9 @@ dispatcher.add_handler(saludo_handler)
 
 hit_handler = CommandHandler('hit',hit)
 dispatcher.add_handler(hit_handler)
+
+kiss_handler = CommandHandler('kiss',kiss)
+dispatcher.add_handler(kiss_handler)
 
 campeon_handler = CommandHandler('campeon',campeon)
 dispatcher.add_handler(campeon_handler)
