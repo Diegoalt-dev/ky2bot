@@ -1,4 +1,5 @@
 from telegram.ext import Updater
+import logging
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 import random
@@ -22,176 +23,173 @@ resultado_hit = kycursor.fetchall()
 kycursor.execute(quer_kiss)
 resultado_kiss = kycursor.fetchall()
 
-class ky2():
-    """
-    La clase ky2 sirve para el bot de telegram ky2bot.
-
-        Atributos:
-
-        Métodos:
-            start(self, update, context)
-
-            echo(self, update, context)
-
-            caps(self, update, context)
-
-            unknown(self, update, context)
-
-            resp_pablo(self, update, context)
-
-            lista_miembros(self, update, context)
-
-            gei(self, update, context)
-
-            lol(self, update, context)
-
-            lineas(self, update, context)
-
-            hi(self, update, context)
-
-            hit(self, update, context)
-
-            kiss(self, update, context)
-
-            campeon(self, update, context)
-
-            tw(self, update, context)
-
-            ball(self, update, context)
-    """
-
-    def __init__(self):
-        self.db = db_ky2()
-        self.resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente argumento", "Sin duda lo mejor que he oído desde Vietnam","Interesante pero discutible", "No tengo el suficiente conocimiento del tema así que le doy la razón", "No estoy de acuerdo pero no creo que discutirlo nos lleve a algo","Me parece un argumento totalmente válido", "Comparto la opinión del compañero", "Efectivamente", "Un comentario acertado para alguien de la nacional", "Me pareció interesante, sobre todo la parte en la que menciona a Palestina"]
-        self.miembros = []
-        self.frases = ["No hay jungla", "mancos todos", "no vuelvo a venirme con Nicolás soporte", "Diego regaló la partida otra vez", "No hay equipo", "Cómprense un par de manos mancos hptas"]
-        self.bola8 = ["En mi opinión, sí","Es cierto","Probablemente","Todo apunta a que sí","Sin duda","Si","Definitivamente","Pregunta en otro momento", "Intenta de nuevo","Será mejor que no te lo diga ahora","No puedo predecirlo ahora","Puede ser","No cuentes con ello","No","Muy dudoso","Mis fuentes me dicen que no","Las perspectivas no son buenas"]
-
-    def start(self, update, context):
-        nombre = update.message.from_user.first_name
-        mensaje = "hola {} soy ky2bot, el mejor de to2 los bots".format(nombre)
-        context.bot.send_message(chat_id = update.effective_chat.id,text = mensaje)
-
-    def echo(self, update, context):
-        nombre = update.message.from_user.first_name
-        if nombre is not None and nombre not in self.miembros:
-            self.miembros.append(nombre)
-
-    def unknown(self, update, context):
-        context.bot.send_message(chat_id = update.effective_chat.id, text = "¿De qué me hablas viejo?")
-
-    def resp_pablo(self, update, context):
-        respuesta = random.randint(0,len(self.resp_pablo_data)-1)
-        context.bot.send_message(chat_id = update.effective_chat.id, text = self.resp_pablo_data[respuesta])
-
-    def lista_miembros(self, update, context):
-        texto = ' \n'.join(self.miembros)
-        update.message.reply_text(text = texto, quote = True)
-
-    def gei(self, update, context):
-        miembro = random.randint(0,len(self.miembros)-1)
-        respuesta = '{} es gei.'.format(self.miembros[miembro])
-        context.bot.send_message(chat_id = update.effective_chat.id, text = respuesta)
-
-    def lol(self, update, context):
-        linea = random.randint(0,len(self.frases)-1)
-        context.bot.send_message(chat_id = update.effective_chat.id, text = self.frases[linea])
-
-    def lineas(self, update, context):
-        jugadores = update.message.text
-        jugadores = jugadores[8:]
-        jugadores = jugadores.split(' ')
-        random.shuffle(jugadores)
-        posiciones = " Top: {} \n Jungla: {} \n Mid: {} \n Sup: {} \n ADC: {}".format(jugadores[0],jugadores[1],jugadores[2],jugadores[3],jugadores[4])
-        context.bot.send_message(chat_id = update.effective_chat.id, text = posiciones)
-
-    def hi(self, update, context):
-        nombre = update.message.from_user.first_name
-        num = random.randint(0,len(resultado)-1)
-        context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "¡{} ha saludado a todos!".format(nombre))
-
-    def hit(self, update, context):
-        nombre = update.message.from_user.first_name
-        golpeado = context.args
-        num = random.randint(0,len(resultado_hit)-1)
-        context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "¡{} ha golpeado a {}!".format(nombre,golpeado[0]))
-
-    def kiss(self, update, context):
-        nombre = update.message.from_user.first_name
-        besito = context.args
-        num = random.randint(0,len(resultado_kiss)-1)
-        context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_bis[num][0], caption = "¡{} ha besado a {}! <3".format(nombre,besito[0]))
-
-    def campeon(self, update, context):
-        dato = update.message.text
-        dato = dato[9:]
-        numero = str(random.randint(1,int(dato)))
-        context.bot.send_message(chat_id=update.effective_chat.id, text = numero)
-
-    def tw(self, update, context):
-        context.bot.send_message(chat_id=update.effective_chat.id, text = "THAT'S WHAT SHE SAID")
-
-    def ball(self, update, context):
-        Pronostico = random.randint(0,len(bola8)-1)
-        context.bot.send_message(chat_id=update.effective_chat.id, text = bola8[Pronostico])
-
-ui = ky2()
 PORT = int(os.environ.get('PORT',5000))
 TOKEN = '1595251301:AAHYRJnjRfWgVPccN1gmmqpf-LfMGaeY0Y8'
-
 updater = Updater(token=TOKEN, use_context = True)
 dispatcher = updater.dispatcher
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                     level=logging.INFO)
+
+##Data
+resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente argumento", "Sin duda lo mejor que he oído desde Vietnam","Interesante pero discutible", "No tengo el suficiente conocimiento del tema así que le doy la razón", "No estoy de acuerdo pero no creo que discutirlo nos lleve a algo","Me parece un argumento totalmente válido", "Comparto la opinión del compañero", "Efectivamente", "Un comentario acertado para alguien de la nacional", "Me pareció interesante, sobre todo la parte en la que menciona a Palestina"]
+miembros = []
+bola8 = ["En mi opinión, sí","Es cierto","Probablemente","Todo apunta a que sí","Sin duda","Si","Definitivamente","Pregunta en otro momento", "Intenta de nuevo","Será mejor que no te lo diga ahora","No puedo predecirlo ahora","Puede ser","No cuentes con ello","No","Muy dudoso","Mis fuentes me dicen que no","Las perspectivas no son buenas"]
+frases = ["No hay jungla", "mancos todos", "no vuelvo a venirme con Nicolás soporte", "Diego regaló la partida otra vez", "No hay equipo", "Cómprense un par de manos mancos hptas"]
+
+## Funciones
+def start(update,context):
+    first_name = update.message.chat.first_name
+    mensaje = "hola {} soy ky2bot, el mejor de to2 los bots".format(first_name)
+    context.bot.send_message(chat_id=update.effective_chat.id,text=mensaje)
+
+def echo(update,context):
+    first_name = update.message.from_user.first_name
+    if first_name is not None and first_name not in miembros:
+        miembros.append(first_name)
+    print(miembros)
+
+def caps(update, context):
+    text_caps = ' '.join(context.args).upper()
+    context.bot.send_message(chat_id=update.effective_chat.id,text = text_caps)
+
+def unknown(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text = "¿De qué me hablas viejo?")
+
+def resp_pablo(update,context):
+    respuesta = random.randint(0,len(resp_pablo_data)-1)
+    context.bot.send_message(chat_id=update.effective_chat.id, text = resp_pablo_data[respuesta])
+
+def lista_miembros(update,context):
+    texto = ' \n'.join(miembros)
+    update.message.reply_text(text = texto, quote = True)
+
+def gei(update,context):
+    miembro = random.randint(0,len(miembros)-1)
+    respuesta = '{} es gei'.format(miembros[miembro])
+    context.bot.send_message(chat_id=update.effective_chat.id, text = respuesta)
+
+def lol(update,context):
+    linea = random.randint(0,len(frases)-1)
+    context.bot.send_message(chat_id=update.effective_chat.id, text = frases[linea])
+
+def lineas(update,context):
+    jugadores = update.message.text
+    jugadores = jugadores[8:]
+    print(jugadores)
+    jugadores = jugadores.split(' ')
+    random.shuffle(jugadores)
+    print("jugadores: ", jugadores)
+    posiciones = " Top: {} \n Jungla: {} \n Mid: {} \n Sup: {} \n ADC: {}".format(jugadores[0],jugadores[1],jugadores[2],jugadores[3],jugadores[4])
+    context.bot.send_message(chat_id=update.effective_chat.id, text = posiciones)
+
+def hi(update,context):
+    nombre = update.message.from_user.first_name
+    num = random.randint(0,len(resultado)-1)
+    print("saludo "+ str(num) +" escogido")
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "¡{} ha saludado a todos!".format(nombre))
+
+def hit(update,context):
+    nombre = update.message.from_user.first_name
+    golpeado = context.args
+    num = random.randint(0,len(resultado_hit)-1)
+    print("golpe "+ str(num) +" escogido")
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "¡{} ha golpeado a {}!".format(nombre,golpeado[0]))
+
+def kiss(update,context):
+    nombre = update.message.from_user.first_name
+    besito = context.args
+    num = random.randint(0,len(resultado_kiss)-1)
+    print("beso "+ str(num) +" escogido")
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_bis[num][0], caption = "¡{} ha besado a {}! <3".format(nombre,besito[0]))
+
+def actdb(update,context):
+    try:
+        kydb = mysql.connector.connect(
+        host = "bjngncktssejoh2aveqb-mysql.services.clever-cloud.com",
+        user = "u46ncc7myfzsh8zr",
+        password = "BVK9GOH4hnPr7PB9QcCp",
+        database = 'bjngncktssejoh2aveqb'
+        )
+        kycursor = kydb.cursor()
+        kycursor.execute(quer_sal)
+        resultado = kycursor.fetchall()
+        kycursor.execute(quer_hit)
+        resultado_hit = kycursor.fetchall()
+        update.message.reply_text(text = "Base de datos reconectada", quote = True)
+    except:
+        update.message.reply_text(text = "Error en reconexión a base de datos", quote = True)
+
+def campeon(update,context):
+    dato = update.message.text
+    dato = dato[9:]
+    numero = str(random.randint(1,int(dato)))
+    context.bot.send_message(chat_id=update.effective_chat.id, text = numero)
+
+def tw(update,context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text = "THAT'S WHAT SHE SAID")
+
+def ball(update,context):
+    Pronostico = random.randint(0,len(bola8)-1)
+    context.bot.send_message(chat_id=update.effective_chat.id, text = bola8[Pronostico])
 
 ## Handler
-start_handler = CommandHandler('start', ui.start())
+start_handler = CommandHandler('start',start)
 dispatcher.add_handler(start_handler)
 
-echo_handler = MessageHandler((~Filters.command), ui.echo())
+echo_handler = MessageHandler((~Filters.command), echo)
 dispatcher.add_handler(echo_handler)
 
-caps_handler = CommandHandler('caps', ui.caps())
+caps_handler = CommandHandler('caps',caps)
 dispatcher.add_handler(caps_handler)
 
-resp_pablo_handler = CommandHandler('pablo', ui.resp_pablo())
+resp_pablo_handler = CommandHandler('pablo',resp_pablo)
 dispatcher.add_handler(resp_pablo_handler)
 
-lista_miembros_handler = CommandHandler('lista', ui.lista_miembros())
+lista_miembros_handler = CommandHandler('lista',lista_miembros)
 dispatcher.add_handler(lista_miembros_handler)
 
-gei_handler = CommandHandler('gei', ui.gei())
+gei_handler = CommandHandler('gei',gei)
 dispatcher.add_handler(gei_handler)
 
-lol_handler = CommandHandler('lol', ui.lol())
+lol_handler = CommandHandler('lol', lol)
 dispatcher.add_handler(lol_handler)
 
-lineas_handler = CommandHandler('lineas', ui.lineas())
+lineas_handler = CommandHandler('lineas', lineas)
 dispatcher.add_handler(lineas_handler)
 
-saludo_handler = CommandHandler('hi', ui.hi())
+saludo_handler = CommandHandler('hi',hi)
 dispatcher.add_handler(saludo_handler)
 
-hit_handler = CommandHandler('hit', ui.hit())
+hit_handler = CommandHandler('hit',hit)
 dispatcher.add_handler(hit_handler)
 
-kiss_handler = CommandHandler('kiss', ui.kiss())
+kiss_handler = CommandHandler('kiss',kiss)
 dispatcher.add_handler(kiss_handler)
 
-campeon_handler = CommandHandler('campeon', ui.campeon())
+campeon_handler = CommandHandler('campeon',campeon)
 dispatcher.add_handler(campeon_handler)
 
-tw_handler = CommandHandler('tw', ui.tw())
+act_db_handler = CommandHandler('actdb',actdb)
+dispatcher.add_handler(act_db_handler)
+
+tw_handler = CommandHandler('tw',tw)
 dispatcher.add_handler(tw_handler)
 
-ball_handler = CommandHandler('8ball', ui.ball())
+ball_handler = CommandHandler('8ball',ball)
 dispatcher.add_handler(ball_handler)
 
-unknown_handler = MessageHandler (Filters.command, ui.unknown())
+unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
+
+
+
+
+
+#updater.start_polling()
 
 updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
                           url_path=TOKEN)
-
 updater.bot.setWebhook('https://ky2bot.herokuapp.com/' + TOKEN)
 
 updater.idle()
