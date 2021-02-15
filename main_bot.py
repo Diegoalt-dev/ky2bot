@@ -130,7 +130,7 @@ def tw(update,context):
     context.bot.send_message(chat_id=update.effective_chat.id, text = "THAT'S WHAT SHE SAID")
 
 def ball(update,context):
-    if context.args is not None:
+    if context.args is not '':
         Pronostico = random.randint(0,len(bola8)-1)
         context.bot.send_message(chat_id=update.effective_chat.id, text = bola8[Pronostico])
     else:
