@@ -33,6 +33,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 ##Data
 resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente argumento", "Sin duda lo mejor que he oído desde Vietnam","Interesante pero discutible", "No tengo el suficiente conocimiento del tema así que le doy la razón", "No estoy de acuerdo pero no creo que discutirlo nos lleve a algo","Me parece un argumento totalmente válido", "Comparto la opinión del compañero", "Efectivamente", "Un comentario acertado para alguien de la nacional", "Me pareció interesante, sobre todo la parte en la que menciona a Palestina"]
 miembros = []
+vida = []
 bola8 = ["En mi opinión, sí","Es cierto","Probablemente","Todo apunta a que sí","Sin duda","Si","Definitivamente","Pregunta en otro momento", "Intenta de nuevo","Será mejor que no te lo diga ahora","No puedo predecirlo ahora","Puede ser","No cuentes con ello","No","Muy dudoso","Mis fuentes me dicen que no","Las perspectivas no son buenas"]
 frases = ["No hay jungla", "mancos todos", "no vuelvo a venirme con Nicolás soporte", "Diego regaló la partida otra vez", "No hay equipo", "Cómprense un par de manos mancos hptas"]
 
@@ -100,7 +101,7 @@ def kiss(update,context):
     besito = context.args
     num = random.randint(0,len(resultado_kiss)-1)
     print("beso "+ str(num) +" escogido")
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_bis[num][0], caption = "¡{} ha besado a {}! <3".format(nombre,besito[0]))
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_kiss[num][0], caption = "¡{} ha besado a {}! <3".format(nombre,besito[0]))
 
 def actdb(update,context):
     try:
@@ -129,8 +130,15 @@ def tw(update,context):
     context.bot.send_message(chat_id=update.effective_chat.id, text = "THAT'S WHAT SHE SAID")
 
 def ball(update,context):
-    Pronostico = random.randint(0,len(bola8)-1)
-    context.bot.send_message(chat_id=update.effective_chat.id, text = bola8[Pronostico])
+    if context.args is not None:
+        Pronostico = random.randint(0,len(bola8)-1)
+        context.bot.send_message(chat_id=update.effective_chat.id, text = bola8[Pronostico])
+    else:
+        context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la pregunta crack.")
+
+def puntos_vida(update,context):
+    participantes = len(miembros)
+    
 
 ## Handler
 start_handler = CommandHandler('start',start)
