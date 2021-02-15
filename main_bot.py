@@ -138,7 +138,7 @@ def hit(update,context):
 
     vida[num]=newvida
     """
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {}!".format(nombre, golpeado))
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {}!".format(nombre, golpeado[0]))
 
 def kiss(update,context):
     nombre = update.message.from_user.first_name
@@ -181,7 +181,7 @@ def ball(update,context):
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la pregunta crack.")
 
 def pvida(update,context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text = "holi")
+    context.bot.send_message(chat_id=update.effective_chat.id, text = vida)
 
 
 def reset(update,context):
