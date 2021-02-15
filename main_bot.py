@@ -140,7 +140,7 @@ def ball(update,context):
 def pvida(update,context):
     participantes = len(miembros)
     participantes2 = context.bot.get_chat_members_count()
-    context.bot.send_message(chat_id=update.effective_chat.id, text = str(participantes))
+    context.bot.send_message(chat_id=update.effective_chat.id, text = 'holi.')
 
 ## Handler
 start_handler = CommandHandler('start',start)
