@@ -34,6 +34,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 ##Data
 resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente argumento", "Sin duda lo mejor que he oído desde Vietnam","Interesante pero discutible", "No tengo el suficiente conocimiento del tema así que le doy la razón", "No estoy de acuerdo pero no creo que discutirlo nos lleve a algo","Me parece un argumento totalmente válido", "Comparto la opinión del compañero", "Efectivamente", "Un comentario acertado para alguien de la nacional", "Me pareció interesante, sobre todo la parte en la que menciona a Palestina"]
 miembros = []
+personas = ["Alvaro", "Diego", "Guaro", "Jessica", "Camilo", "Camila", "Risca", "Miguel", "Pablo G.", "Pablo S.", "Pablo N.", "Santi", "Fernando", "Samuel", "Valentina", "Maria P", "Paisa", "Julian", "ky2bot"]
 vida = []
 bola8 = ["En mi opinión, sí","Es cierto","Probablemente","Todo apunta a que sí","Sin duda","Si","Definitivamente","Pregunta en otro momento", "Intenta de nuevo","Será mejor que no te lo diga ahora","No puedo predecirlo ahora","Puede ser","No cuentes con ello","No","Muy dudoso","Mis fuentes me dicen que no","Las perspectivas no son buenas"]
 frases = ["No hay jungla.", "mancos todos.","Paisa carreenos.", "no vuelvo a venirme con Fabio support.", "Diego regaló la partida otra vez.", "gg no team.", "Cómprense un par de manos mancos hptas.", "Montaña es el peor mid del mundo.", "Vallejo otra vez en farm simulator."]
@@ -155,9 +156,9 @@ def reset(update,context):
     while cont < participantes:
         vida.append("10000hp ██████████")
         cont=cont+1
-    context.bot.send_message(chat_id=update.effective_chat.id, text = str(vida))
+    context.bot.send_message(chat_id=update.effective_chat.id, text = "{}=    {}\n{}=     {}\n{}=     {}\n{}=   {}\n{}=    {}\n{}=    {}\n{}=     {}\n{}=    {}\n{}=  {}\n{}=  {}\n{}=  {}\n{}=     {}\n{}=  {}\n{}=    {}\n{}= {}\n{}=   {}\n{}=     {}\n{}=    {}\n{}=    {}\n".format(personas[0],vida[0], personas[1],vida[1],personas[2],vida[2],personas[3],vida[3],personas[4],vida[4],personas[5],vida[5],personas[6],vida[6],personas[7],vida[7], personas[8],vida[8], personas[9],vida[9],personas[10],vida[10],personas[11],vida[11],personas[12],vida[12],personas[13],vida[13],personas[14],vida[14],personas[15],vida[15], personas[16],vida[16],personas[17],vida[17],personas[18],vida[18]))
 
-    
+
 ## Handler
 start_handler = CommandHandler('start',start)
 dispatcher.add_handler(start_handler)
