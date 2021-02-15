@@ -139,7 +139,9 @@ def ball(update,context):
 
 def pvida(update,context):
     to2 = context.bot.get_chat_administrators(chat_id=update.effective_chat.id)
-    context.bot.send_message(chat_id=update.effective_chat.id, text = str(to2))
+    for persona in to2:
+        persona.user.username
+        context.bot.send_message(chat_id=update.effective_chat.id, text = str(persona))
 
 def reset(update,context):
     cont = 0
