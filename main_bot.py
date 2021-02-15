@@ -147,7 +147,9 @@ def ball(update,context):
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la pregunta crack.")
 
 def pvida(update,context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text = str(vida))
+    vidas = "{}=    {}\n{}=     {}\n{}=     {}\n{}=   {}\n{}=    {}\n{}=    {}\n{}=      {}\n{}=    {}\n{}=  {}\n{}=  {}\n{}=  {}\n{}=        {}\n{}= {}\n{}=    {}\n{}= {}\n{}=   {}\n{}=       {}\n{}=      {}\n{}=    {}\n".format(personas[0],vida[0], personas[1],vida[1],personas[2],vida[2],personas[3],vida[3],personas[4],vida[4],personas[5],vida[5],personas[6],vida[6],personas[7],vida[7], personas[8],vida[8], personas[9],vida[9],personas[10],vida[10],personas[11],vida[11],personas[12],vida[12],personas[13],vida[13],personas[14],vida[14],personas[15],vida[15], personas[16],vida[16],personas[17],vida[17],personas[18],vida[18])
+    context.bot.send_message(chat_id=update.effective_chat.id, text = vidas)
+
 
 def reset(update,context):
     cont = 0
