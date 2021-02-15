@@ -139,8 +139,8 @@ def ball(update,context):
 
 def pvida(update,context):
     #participantes = len(miembros)
-    #participantes2 = context.bot.get_chat_members_count()
-    context.bot.send_message(chat_id=update.effective_chat.id, text = 'holi.')
+    participantes = context.bot.get_chat_members_count(chat_id=update.effective_chat.id)
+    context.bot.send_message(chat_id=update.effective_chat.id, text = str(participantes))
 
 ## Handler
 start_handler = CommandHandler('start',start)
@@ -194,11 +194,6 @@ dispatcher.add_handler(pvida_handler)
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
 
-
-
-
-
-#updater.start_polling()
 
 updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
