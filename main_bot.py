@@ -138,10 +138,11 @@ def ball(update,context):
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la pregunta crack.")
 
 def pvida(update,context):
+    miembro=[]
     to2 = context.bot.get_chat_administrators(chat_id=update.effective_chat.id)
     for persona in to2:
-        persona.user.username
-        context.bot.send_message(chat_id=update.effective_chat.id, text = str(persona))
+        miembro.append(persona.user.first_name)
+    context.bot.send_message(chat_id=update.effective_chat.id, text = str(miembro))
 
 def reset(update,context):
     cont = 0
