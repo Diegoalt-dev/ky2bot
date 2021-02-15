@@ -138,8 +138,8 @@ def ball(update,context):
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la pregunta crack.")
 
 def pvida(update,context):
-    participantes = len(miembros)
-    participantes2 = context.bot.get_chat_members_count()
+    #participantes = len(miembros)
+    #participantes2 = context.bot.get_chat_members_count()
     context.bot.send_message(chat_id=update.effective_chat.id, text = 'holi.')
 
 ## Handler
