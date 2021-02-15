@@ -137,10 +137,10 @@ def ball(update,context):
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la pregunta crack.")
 
-def puntos_vida(update,context):
+def pvida(update,context):
     participantes = len(miembros)
     participantes2 = context.bot.get_chat_members_count()
-    print(participantes2)
+    context.bot.send_message(chat_id=update.effective_chat.id, text = str(participantes+participantes2))
 
 ## Handler
 start_handler = CommandHandler('start',start)
@@ -187,6 +187,9 @@ dispatcher.add_handler(tw_handler)
 
 ball_handler = CommandHandler('8ball',ball)
 dispatcher.add_handler(ball_handler)
+
+pvida_handler = CommandHandler('pvida',pvida)
+dispatcher.add_handler(pvida_handler)
 
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
