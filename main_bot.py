@@ -103,8 +103,42 @@ def hit(update,context):
     num = random.randint(0,len(resultado_hit)-1)
     print("golpe "+ str(num) +" escogido")
 
-    
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "¡{} ha golpeado a {}!".format(nombre,golpeado[0]))
+    num2 = personas.index(golpeado)
+    life = int(vida[num2].split('h')[0])
+    barra = vida[num2].split()[1]
+
+    if life > 0:
+        golpe = random.randint(0,5000-1)
+        life = life - golpe
+        if life > 9999:
+            barra = "██████████"
+        if life > 8999 and life < 9999:
+            barra = " █████████░"
+        if life > 7999 and life < 8999:
+            barra = " ████████░░"
+        if life > 6999 and life < 7999:
+            barra = " ███████░░░"
+        if life > 5999 and life < 6999:
+            barra = " ██████░░░░"
+        if life > 4999 and life < 5999:
+            barra = " █████░░░░░"
+        if life > 3999 and life < 4999:
+            barra = " ████░░░░░░"
+        if life > 2999 and life < 3999:
+            barra = " ███░░░░░░░"
+        if life > 1999 and life < 2999:
+            barra = " ██░░░░░░░░"
+        if life > 999 and life < 1999:
+            barra = " █░░░░░░░░░"
+        if life < 0:
+            barra = " ░░░░░░░░░░"
+            life = 0
+    newvida = vida[num].replace(vida[num].split('h')[0],str(life))
+    newvida = newvida.replace(vida[num].split()[1],barra)
+
+    vida[num]=newvida
+   
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {} y le hizo {} de daño!".format(nombre, personas[num2], golpe))
 
 def kiss(update,context):
     nombre = update.message.from_user.first_name
