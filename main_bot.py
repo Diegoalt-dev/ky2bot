@@ -36,7 +36,7 @@ resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente ar
 miembros = []
 vida = []
 bola8 = ["En mi opinión, sí","Es cierto","Probablemente","Todo apunta a que sí","Sin duda","Si","Definitivamente","Pregunta en otro momento", "Intenta de nuevo","Será mejor que no te lo diga ahora","No puedo predecirlo ahora","Puede ser","No cuentes con ello","No","Muy dudoso","Mis fuentes me dicen que no","Las perspectivas no son buenas"]
-frases = ["No hay jungla", "mancos todos", "no vuelvo a venirme con Nicolás soporte", "Diego regaló la partida otra vez", "No hay equipo", "Cómprense un par de manos mancos hptas"]
+frases = ["No hay jungla.", "mancos todos.","Paisa carreenos.", "no vuelvo a venirme con Fabio support.", "Diego regaló la partida otra vez.", "gg no team.", "Cómprense un par de manos mancos hptas.", "Montaña es el peor mid del mundo.", "Vallejo otra vez en farm simulator."]
 
 ## Funciones
 def start(update,context):
@@ -138,10 +138,16 @@ def ball(update,context):
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la pregunta crack.")
 
 def pvida(update,context):
-    #participantes = len(miembros)
-    participantes = context.bot.get_chat_members_count(chat_id=update.effective_chat.id)
-    context.bot.send_message(chat_id=update.effective_chat.id, text = str(participantes))
+    to2 = context.bot.get_chat(chat_id=update.effective_chat.id)
+    context.bot.send_message(chat_id=update.effective_chat.id, text = str(to2))
 
+def reset(update,context):
+    cont = 0
+    participantes = context.bot.get_chat_members_count(chat_id=update.effective_chat.id)
+    while cont < participantes-1:
+        vida.append(8000)
+        cont=cont+1
+    context.bot.send_message(chat_id=update.effective_chat.id, text = str(vida))
 ## Handler
 start_handler = CommandHandler('start',start)
 dispatcher.add_handler(start_handler)
@@ -190,6 +196,9 @@ dispatcher.add_handler(ball_handler)
 
 pvida_handler = CommandHandler('pvida',pvida)
 dispatcher.add_handler(pvida_handler)
+
+reset_handler = CommandHandler('reset',reset)
+dispatcher.add_handler(reset_handler)
 
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
