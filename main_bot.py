@@ -62,6 +62,12 @@ def resp_pablo(update,context):
     context.bot.send_message(chat_id=update.effective_chat.id, text = resp_pablo_data[respuesta])
 
 def lista_miembros(update,context):
+    """miembro=[]
+    to2 = context.bot.get_chat_administrators(chat_id=update.effective_chat.id)
+    for persona in to2:
+        miembro.append(persona.user.first_name)
+    context.bot.send_message(chat_id=update.effective_chat.id, text = str(miembro))"""
+
     texto = ' \n'.join(miembros)
     update.message.reply_text(text = texto, quote = True)
 
@@ -95,6 +101,8 @@ def hit(update,context):
     golpeado = context.args
     num = random.randint(0,len(resultado_hit)-1)
     print("golpe "+ str(num) +" escogido")
+
+    
     context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "¡{} ha golpeado a {}!".format(nombre,golpeado[0]))
 
 def kiss(update,context):
@@ -138,19 +146,18 @@ def ball(update,context):
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la pregunta crack.")
 
 def pvida(update,context):
-    miembro=[]
-    to2 = context.bot.get_chat_administrators(chat_id=update.effective_chat.id)
-    for persona in to2:
-        miembro.append(persona.user.first_name)
-    context.bot.send_message(chat_id=update.effective_chat.id, text = str(miembro))
+    context.bot.send_message(chat_id=update.effective_chat.id, text = str(vida))
 
 def reset(update,context):
     cont = 0
+    vida = []
     participantes = context.bot.get_chat_members_count(chat_id=update.effective_chat.id)
-    while cont < participantes-1:
-        vida.append(8000)
+    while cont < participantes:
+        vida.append("10000hp ██████████")
         cont=cont+1
     context.bot.send_message(chat_id=update.effective_chat.id, text = str(vida))
+
+    
 ## Handler
 start_handler = CommandHandler('start',start)
 dispatcher.add_handler(start_handler)
