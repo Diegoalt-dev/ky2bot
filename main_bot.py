@@ -1,4 +1,5 @@
 from telegram.ext import Updater
+import telegram
 import logging
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
@@ -138,7 +139,8 @@ def ball(update,context):
 
 def puntos_vida(update,context):
     participantes = len(miembros)
-    
+    participantes2 = context.bot.get_chat_members_count()
+    print(participantes2)
 
 ## Handler
 start_handler = CommandHandler('start',start)
