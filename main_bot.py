@@ -151,9 +151,11 @@ def actdb(update, context):
         )
         kycursor = kydb.cursor()
         kycursor.execute(quer_sal)
-        resultado = kycursor.fetchall()
+        kycursor.fetchall()
         kycursor.execute(quer_hit)
-        resultado_hit = kycursor.fetchall()
+        kycursor.fetchall()
+        kycursor.execute(quer_kiss)
+        kycursor.fetchall()
         update.message.reply_text(text = "Base de datos reconectada", quote = True)
     except:
         update.message.reply_text(text = "Error en reconexión a base de datos", quote = True)
