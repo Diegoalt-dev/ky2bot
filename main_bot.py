@@ -36,25 +36,21 @@ resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente ar
 miembros = []
 global vida
 vida = []
-personas = ["Alvaro", "Diego", "Guaro", "Jessica", "Camilo", "Camila", "Risca", "Miguel", "Pablo G.", "Pablo S.", "Pablo N.", "Santi", "Fernando", "Samuel", "Valentina", "Maria P", "Paisa", "Julian", "ky2bot"]
+personas = ["Alvaro", "Diego", "Guaro", "Jessica", "Camilo", "Camila", "Risca", "Miguel", "PabloG", "PabloS", "PabloN", "Santi", "Fernando", "Samuel", "Valentina", "MariaP", "Paisa", "Julian", "ky2bot"]
 bola8 = ["En mi opinión, sí","Es cierto","Probablemente","Todo apunta a que sí","Sin duda","Si","Definitivamente","Pregunta en otro momento", "Intenta de nuevo","Será mejor que no te lo diga ahora","No puedo predecirlo ahora","Puede ser","No cuentes con ello","No","Muy dudoso","Mis fuentes me dicen que no","Las perspectivas no son buenas"]
 frases = ["No hay jungla.", "mancos todos.","Paisa carreenos.", "no vuelvo a venirme con Fabio support.", "Diego regaló la partida otra vez.", "gg no team.", "Cómprense un par de manos mancos hptas.", "Montaña es el peor mid del mundo.", "Vallejo otra vez en farm simulator."]
 
 ## Funciones
-def start(update,context):
+def start(update, context):
     first_name = update.message.chat.first_name
     mensaje = "hola {} soy ky2bot, el mejor de to2 los bots".format(first_name)
     context.bot.send_message(chat_id=update.effective_chat.id,text=mensaje)
 
-def echo(update,context):
+def echo(update, context):
     first_name = update.message.from_user.first_name
     if first_name is not None and first_name not in miembros:
         miembros.append(first_name)
     print(miembros)
-
-def caps(update, context):
-    text_caps = ' '.join(context.args).upper()
-    context.bot.send_message(chat_id=update.effective_chat.id,text = text_caps)
 
 def unknown(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text = "¿De qué me hablas viejo?")
@@ -63,26 +59,20 @@ def resp_pablo(update,context):
     respuesta = random.randint(0,len(resp_pablo_data)-1)
     context.bot.send_message(chat_id=update.effective_chat.id, text = resp_pablo_data[respuesta])
 
-def lista_miembros(update,context):
-    """miembro=[]
-    to2 = context.bot.get_chat_administrators(chat_id=update.effective_chat.id)
-    for persona in to2:
-        miembro.append(persona.user.first_name)
-    context.bot.send_message(chat_id=update.effective_chat.id, text = str(miembro))"""
-
+def lista_miembros(update, context):
     texto = ' \n'.join(miembros)
     update.message.reply_text(text = texto, quote = True)
 
 def gei(update,context):
-    miembro = random.randint(0,len(miembros)-1)
-    respuesta = '{} es gei'.format(miembros[miembro])
+    miembro = random.randint(0,len(personas)-1)
+    respuesta = '{} es gei'.format(personas[miembro])
     context.bot.send_message(chat_id=update.effective_chat.id, text = respuesta)
 
-def lol(update,context):
+def lol(update, context):
     linea = random.randint(0,len(frases)-1)
     context.bot.send_message(chat_id=update.effective_chat.id, text = frases[linea])
 
-def lineas(update,context):
+def lineas(update, context):
     jugadores = update.message.text
     jugadores = jugadores[8:]
     print(jugadores)
@@ -92,62 +82,64 @@ def lineas(update,context):
     posiciones = " Top: {} \n Jungla: {} \n Mid: {} \n Sup: {} \n ADC: {}".format(jugadores[0],jugadores[1],jugadores[2],jugadores[3],jugadores[4])
     context.bot.send_message(chat_id=update.effective_chat.id, text = posiciones)
 
-def hi(update,context):
+def hi(update, context):
     nombre = update.message.from_user.first_name
     num = random.randint(0,len(resultado)-1)
     print("saludo "+ str(num) +" escogido")
     context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "¡{} ha saludado a todos!".format(nombre))
 
-def hit(update,context):
-    global vida
-    nombre = update.message.from_user.first_name
-    golpeado = context.args
-    num = random.randint(0,len(resultado_hit)-1)
-    print("golpe "+ str(num) +" escogido")
-    num2 = personas.index(golpeado[0])
-    print(num2)
-    life = int(vida[num2].split('h')[0])
-    barra = vida[num2].split()[1]
-    if life > 0:
-        golpe = random.randint(0,5000-1)
-        life = life - golpe
-        if life > 9999:
-            barra = "██████████"
-        if life > 8999 and life < 9999:
-            barra = " █████████░"
-        if life > 7999 and life < 8999:
-            barra = " ████████░░"
-        if life > 6999 and life < 7999:
-            barra = " ███████░░░"
-        if life > 5999 and life < 6999:
-            barra = " ██████░░░░"
-        if life > 4999 and life < 5999:
-            barra = " █████░░░░░"
-        if life > 3999 and life < 4999:
-            barra = " ████░░░░░░"
-        if life > 2999 and life < 3999:
-            barra = " ███░░░░░░░"
-        if life > 1999 and life < 2999:
-            barra = " ██░░░░░░░░"
-        if life > 999 and life < 1999:
-            barra = " █░░░░░░░░░"
-        if life < 0:
-            barra = " ░░░░░░░░░░"
-            life = 0
-    newvida = vida[num2].replace(vida[num2].split('h')[0],str(life))
-    newvida = newvida.replace(vida[num2].split()[1],barra)
-    vida[num2]=newvida
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {} y le hizo {} de daño!".format(nombre,personas[num2],golpe))
-    print("Hit acabado.")
+def hit(update, context):
+    if update.message.text != '/hit':
+        global vida
+        nombre = update.message.from_user.first_name
+        golpeado = context.args
+        num = random.randint(0,len(resultado_hit)-1)
+        print("golpe "+ str(num) +" escogido")
+        num2 = personas.index(golpeado[0])
+        life = int(vida[num2].split('h')[0])
+        barra = vida[num2].split()[1]
+        if life > 0:
+            golpe = random.randint(0,5000-1)
+            life = life - golpe
+            if life > 9999:
+                barra = "██████████"
+            if life > 8999 and life < 9999:
+                barra = " █████████░"
+            if life > 7999 and life < 8999:
+                barra = " ████████░░"
+            if life > 6999 and life < 7999:
+                barra = " ███████░░░"
+            if life > 5999 and life < 6999:
+                barra = " ██████░░░░"
+            if life > 4999 and life < 5999:
+                barra = " █████░░░░░"
+            if life > 3999 and life < 4999:
+                barra = " ████░░░░░░"
+            if life > 2999 and life < 3999:
+                barra = " ███░░░░░░░"
+            if life > 1999 and life < 2999:
+                barra = " ██░░░░░░░░"
+            if life > 999 and life < 1999:
+                barra = " █░░░░░░░░░"
+            if life < 0:
+                barra = " ░░░░░░░░░░"
+                life = 0
+        newvida = vida[num2].replace(vida[num2].split('h')[0],str(life))
+        newvida = newvida.replace(vida[num2].split()[1],barra)
+        vida[num2]=newvida
+        context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {} y le hizo {} de daño!".format(nombre,personas[num2],golpe))
+        print("Hit acabado.")
+    else:
+        context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la persona crack.")
 
-def kiss(update,context):
+def kiss(update, context):
     nombre = update.message.from_user.first_name
     besito = context.args
     num = random.randint(0,len(resultado_kiss)-1)
     print("beso "+ str(num) +" escogido")
     context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_kiss[num][0], caption = "¡{} ha besado a {}! <3".format(nombre,besito[0]))
 
-def actdb(update,context):
+def actdb(update, context):
     try:
         kydb = mysql.connector.connect(
         host = "bjngncktssejoh2aveqb-mysql.services.clever-cloud.com",
@@ -164,7 +156,7 @@ def actdb(update,context):
     except:
         update.message.reply_text(text = "Error en reconexión a base de datos", quote = True)
 
-def campeon(update,context):
+def campeon(update, context):
     dato = update.message.text
     dato = dato[9:]
     numero = str(random.randint(1,int(dato)))
@@ -173,19 +165,19 @@ def campeon(update,context):
 def tw(update,context):
     context.bot.send_message(chat_id=update.effective_chat.id, text = "THAT'S WHAT SHE SAID")
 
-def ball(update,context):
+def ball(update, context):
     if update.message.text != '/8ball':
         Pronostico = random.randint(0,len(bola8)-1)
         context.bot.send_message(chat_id=update.effective_chat.id, text = bola8[Pronostico])
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la pregunta crack.")
 
-def pvida(update,context):
+def pvida(update, context):
     vidas = "{}=    {}\n{}=     {}\n{}=     {}\n{}=   {}\n{}=    {}\n{}=    {}\n{}=      {}\n{}=    {}\n{}=  {}\n{}=  {}\n{}=  {}\n{}=        {}\n{}= {}\n{}=    {}\n{}= {}\n{}=   {}\n{}=       {}\n{}=      {}\n{}=    {}\n".format(personas[0],vida[0], personas[1],vida[1],personas[2],vida[2],personas[3],vida[3],personas[4],vida[4],personas[5],vida[5],personas[6],vida[6],personas[7],vida[7], personas[8],vida[8], personas[9],vida[9],personas[10],vida[10],personas[11],vida[11],personas[12],vida[12],personas[13],vida[13],personas[14],vida[14],personas[15],vida[15], personas[16],vida[16],personas[17],vida[17],personas[18],vida[18])
     context.bot.send_message(chat_id=update.effective_chat.id, text = vidas)
     print("pvida acabado.")
 
-def reset(update,context):
+def reset(update, context):
     cont = 0
     global vida
     vida = []
@@ -195,16 +187,18 @@ def reset(update,context):
     vidas = "{}=    {}\n{}=     {}\n{}=     {}\n{}=   {}\n{}=    {}\n{}=    {}\n{}=      {}\n{}=    {}\n{}=  {}\n{}=  {}\n{}=  {}\n{}=        {}\n{}= {}\n{}=    {}\n{}= {}\n{}=   {}\n{}=       {}\n{}=      {}\n{}=    {}\n".format(personas[0],vida[0], personas[1],vida[1],personas[2],vida[2],personas[3],vida[3],personas[4],vida[4],personas[5],vida[5],personas[6],vida[6],personas[7],vida[7], personas[8],vida[8], personas[9],vida[9],personas[10],vida[10],personas[11],vida[11],personas[12],vida[12],personas[13],vida[13],personas[14],vida[14],personas[15],vida[15], personas[16],vida[16],personas[17],vida[17],personas[18],vida[18])
     context.bot.send_message(chat_id=update.effective_chat.id, text = vidas)
     print("Reset acabado.")
-
+'''
+def duel(update, context):
+    nombre = update.message.from_user.first_name
+    golpeado = context.args
+    context.bot.send_message(chat_id = update.effective_chat.id, caption = "{} ha retado a un duelo a {}!".format(nombre,personas[num2]))
+'''
 ## Handler
 start_handler = CommandHandler('start',start)
 dispatcher.add_handler(start_handler)
 
 echo_handler = MessageHandler((~Filters.command), echo)
 dispatcher.add_handler(echo_handler)
-
-caps_handler = CommandHandler('caps',caps)
-dispatcher.add_handler(caps_handler)
 
 resp_pablo_handler = CommandHandler('pablo',resp_pablo)
 dispatcher.add_handler(resp_pablo_handler)
@@ -251,9 +245,11 @@ dispatcher.add_handler(reset_handler)
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
 
+updater.start_polling()
+'''
 updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
                           url_path=TOKEN)
 updater.bot.setWebhook('https://ky2bot.herokuapp.com/' + TOKEN)
 updater.idle()
-
+'''
