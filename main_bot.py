@@ -34,9 +34,9 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 ##Data
 resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente argumento", "Sin duda lo mejor que he oído desde Vietnam","Interesante pero discutible", "No tengo el suficiente conocimiento del tema así que le doy la razón", "No estoy de acuerdo pero no creo que discutirlo nos lleve a algo","Me parece un argumento totalmente válido", "Comparto la opinión del compañero", "Efectivamente", "Un comentario acertado para alguien de la nacional", "Me pareció interesante, sobre todo la parte en la que menciona a Palestina"]
 miembros = []
-personas = ["Alvaro", "Diego", "Guaro", "Jessica", "Camilo", "Camila", "Risca", "Miguel", "Pablo G.", "Pablo S.", "Pablo N.", "Santi", "Fernando", "Samuel", "Valentina", "Maria P", "Paisa", "Julian", "ky2bot"]
-#vida = ["10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████","10000hp ██████████"]
+global vida
 vida = []
+personas = ["Alvaro", "Diego", "Guaro", "Jessica", "Camilo", "Camila", "Risca", "Miguel", "Pablo G.", "Pablo S.", "Pablo N.", "Santi", "Fernando", "Samuel", "Valentina", "Maria P", "Paisa", "Julian", "ky2bot"]
 bola8 = ["En mi opinión, sí","Es cierto","Probablemente","Todo apunta a que sí","Sin duda","Si","Definitivamente","Pregunta en otro momento", "Intenta de nuevo","Será mejor que no te lo diga ahora","No puedo predecirlo ahora","Puede ser","No cuentes con ello","No","Muy dudoso","Mis fuentes me dicen que no","Las perspectivas no son buenas"]
 frases = ["No hay jungla.", "mancos todos.","Paisa carreenos.", "no vuelvo a venirme con Fabio support.", "Diego regaló la partida otra vez.", "gg no team.", "Cómprense un par de manos mancos hptas.", "Montaña es el peor mid del mundo.", "Vallejo otra vez en farm simulator."]
 
@@ -99,15 +99,15 @@ def hi(update,context):
     context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "¡{} ha saludado a todos!".format(nombre))
 
 def hit(update,context):
+    global vida
     nombre = update.message.from_user.first_name
     golpeado = context.args
     num = random.randint(0,len(resultado_hit)-1)
     print("golpe "+ str(num) +" escogido")
-    """
-    num2 = personas.index(golpeado)
+    num2 = personas.index(golpeado[0])
+    print(num2)
     life = int(vida[num2].split('h')[0])
     barra = vida[num2].split()[1]
-
     if life > 0:
         golpe = random.randint(0,5000-1)
         life = life - golpe
@@ -134,12 +134,11 @@ def hit(update,context):
         if life < 0:
             barra = " ░░░░░░░░░░"
             life = 0
-    newvida = vida[num].replace(vida[num].split('h')[0],str(life))
-    newvida = newvida.replace(vida[num].split()[1],barra)
-
-    vida[num]=newvida
-    """
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {}!".format(nombre, golpeado[0]))
+    newvida = vida[num2].replace(vida[num2].split('h')[0],str(life))
+    newvida = newvida.replace(vida[num2].split()[1],barra)
+    vida[num2]=newvida
+    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {} y le hizo {} de daño!".format(nombre,personas[num2],golpe))
+    print("Hit acabado.")
 
 def kiss(update,context):
     nombre = update.message.from_user.first_name
@@ -182,21 +181,20 @@ def ball(update,context):
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la pregunta crack.")
 
 def pvida(update,context):
-    print(vida)
-    texto = "holi"
-    #vidas = "{}=    {}\n{}=     {}\n{}=     {}\n{}=   {}\n{}=    {}\n{}=    {}\n{}=      {}\n{}=    {}\n{}=  {}\n{}=  {}\n{}=  {}\n{}=        {}\n{}= {}\n{}=    {}\n{}= {}\n{}=   {}\n{}=       {}\n{}=      {}\n{}=    {}\n".format(personas[0],vida[0], personas[1],vida[1],personas[2],vida[2],personas[3],vida[3],personas[4],vida[4],personas[5],vida[5],personas[6],vida[6],personas[7],vida[7], personas[8],vida[8], personas[9],vida[9],personas[10],vida[10],personas[11],vida[11],personas[12],vida[12],personas[13],vida[13],personas[14],vida[14],personas[15],vida[15], personas[16],vida[16],personas[17],vida[17],personas[18],vida[18])
-    
-    update.message.reply_text(text = texto, quote = True)
-
+    vidas = "{}=    {}\n{}=     {}\n{}=     {}\n{}=   {}\n{}=    {}\n{}=    {}\n{}=      {}\n{}=    {}\n{}=  {}\n{}=  {}\n{}=  {}\n{}=        {}\n{}= {}\n{}=    {}\n{}= {}\n{}=   {}\n{}=       {}\n{}=      {}\n{}=    {}\n".format(personas[0],vida[0], personas[1],vida[1],personas[2],vida[2],personas[3],vida[3],personas[4],vida[4],personas[5],vida[5],personas[6],vida[6],personas[7],vida[7], personas[8],vida[8], personas[9],vida[9],personas[10],vida[10],personas[11],vida[11],personas[12],vida[12],personas[13],vida[13],personas[14],vida[14],personas[15],vida[15], personas[16],vida[16],personas[17],vida[17],personas[18],vida[18])
+    context.bot.send_message(chat_id=update.effective_chat.id, text = vidas)
+    print("pvida acabado.")
 
 def reset(update,context):
     cont = 0
+    global vida
     vida = []
     while cont < 19:
         vida.append("10000hp ██████████")
         cont=cont+1
     vidas = "{}=    {}\n{}=     {}\n{}=     {}\n{}=   {}\n{}=    {}\n{}=    {}\n{}=      {}\n{}=    {}\n{}=  {}\n{}=  {}\n{}=  {}\n{}=        {}\n{}= {}\n{}=    {}\n{}= {}\n{}=   {}\n{}=       {}\n{}=      {}\n{}=    {}\n".format(personas[0],vida[0], personas[1],vida[1],personas[2],vida[2],personas[3],vida[3],personas[4],vida[4],personas[5],vida[5],personas[6],vida[6],personas[7],vida[7], personas[8],vida[8], personas[9],vida[9],personas[10],vida[10],personas[11],vida[11],personas[12],vida[12],personas[13],vida[13],personas[14],vida[14],personas[15],vida[15], personas[16],vida[16],personas[17],vida[17],personas[18],vida[18])
     context.bot.send_message(chat_id=update.effective_chat.id, text = vidas)
+    print("Reset acabado.")
 
 ## Handler
 start_handler = CommandHandler('start',start)
@@ -253,10 +251,9 @@ dispatcher.add_handler(reset_handler)
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
 
-
 updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
                           url_path=TOKEN)
 updater.bot.setWebhook('https://ky2bot.herokuapp.com/' + TOKEN)
-
 updater.idle()
+
