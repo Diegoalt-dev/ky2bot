@@ -133,12 +133,14 @@ def hit(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la persona crack.")
 
 def kiss(update, context):
-    nombre = update.message.from_user.first_name
-    besito = context.args
-    num = random.randint(0,len(resultado_kiss)-1)
-    print("beso "+ str(num) +" escogido")
-    context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_kiss[num][0], caption = "¡{} ha besado a {}! <3".format(nombre,besito[0]))
-
+    if update.message.text != '/kiss':
+        nombre = update.message.from_user.first_name
+        besito = context.args
+        num = random.randint(0,len(resultado_kiss)-1)
+        print("beso "+ str(num) +" escogido")
+        context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_kiss[num][0], caption = "¡{} ha besado a {}! <3".format(nombre,besito[0]))
+    else:
+        context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la persona afortunada.")
 def actdb(update, context):
     try:
         kydb = mysql.connector.connect(
@@ -244,7 +246,7 @@ dispatcher.add_handler(reset_handler)
 
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
-
+'''
 updater.start_polling()
 '''
 updater.start_webhook(listen="0.0.0.0",
@@ -252,4 +254,4 @@ updater.start_webhook(listen="0.0.0.0",
                           url_path=TOKEN)
 updater.bot.setWebhook('https://ky2bot.herokuapp.com/' + TOKEN)
 updater.idle()
-'''
+
