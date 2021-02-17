@@ -99,7 +99,7 @@ def hit(update, context):
         life = int(vida[num2].split('h')[0])
         barra = vida[num2].split()[1]
         if life > 0:
-            golpe = random.randint(0,5000-1)
+            golpe = random.randint(0,2500-1)
             life = life - golpe
             if life > 9999:
                 barra = "██████████"
@@ -119,11 +119,13 @@ def hit(update, context):
                 barra = " ███░░░░░░░"
             if life > 1999 and life < 2999:
                 barra = " ██░░░░░░░░"
-            if life > 999 and life < 1999:
+            if life > 999 and life < 1999:  
                 barra = " █░░░░░░░░░"
             if life < 0:
                 barra = " ░░░░░░░░░░"
                 life = 0
+        else:
+            context.bot.send_message(chat_id=update.effective_chat.id, text = "Ya está muerto. )=")
         newvida = vida[num2].replace(vida[num2].split('h')[0],str(life))
         newvida = newvida.replace(vida[num2].split()[1],barra)
         vida[num2]=newvida
@@ -141,6 +143,7 @@ def kiss(update, context):
         context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_kiss[num][0], caption = "¡{} ha besado a {}! <3".format(nombre,besito[0]))
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la persona afortunada.")
+
 def actdb(update, context):
     try:
         kydb = mysql.connector.connect(
