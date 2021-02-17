@@ -50,7 +50,6 @@ def echo(update, context):
     first_name = update.message.from_user.first_name
     if first_name is not None and first_name not in miembros:
         miembros.append(first_name)
-    print(miembros)
 
 def unknown(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text = "¿De qué me hablas viejo?")
@@ -89,47 +88,48 @@ def hi(update, context):
     context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado[num][0], caption = "¡{} ha saludado a todos!".format(nombre))
 
 def hit(update, context):
+    global vida
     if update.message.text != '/hit':
-        global vida
         nombre = update.message.from_user.first_name
         golpeado = context.args
+        golpe = random.randint(0,2500-1)
         num = random.randint(0,len(resultado_hit)-1)
         print("golpe "+ str(num) +" escogido")
-        num2 = personas.index(golpeado[0])
-        life = int(vida[num2].split('h')[0])
-        barra = vida[num2].split()[1]
-        if life > 0:
-            golpe = random.randint(0,2500-1)
-            life = life - golpe
-            if life > 9999:
-                barra = "██████████"
-            if life > 8999 and life < 9999:
-                barra = " █████████░"
-            if life > 7999 and life < 8999:
-                barra = " ████████░░"
-            if life > 6999 and life < 7999:
-                barra = " ███████░░░"
-            if life > 5999 and life < 6999:
-                barra = " ██████░░░░"
-            if life > 4999 and life < 5999:
-                barra = " █████░░░░░"
-            if life > 3999 and life < 4999:
-                barra = " ████░░░░░░"
-            if life > 2999 and life < 3999:
-                barra = " ███░░░░░░░"
-            if life > 1999 and life < 2999:
-                barra = " ██░░░░░░░░"
-            if life > 999 and life < 1999:  
-                barra = " █░░░░░░░░░"
-            if life < 0:
-                barra = " ░░░░░░░░░░"
-                life = 0
-        else:
-            context.bot.send_message(chat_id=update.effective_chat.id, text = "Ya está muerto. )=")
-        newvida = vida[num2].replace(vida[num2].split('h')[0],str(life))
-        newvida = newvida.replace(vida[num2].split()[1],barra)
-        vida[num2]=newvida
-        context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {} y le hizo {} de daño!".format(nombre,personas[num2],golpe))
+        if any(golpeado[0] in persona for persona in personas) and len(vida) != 0:
+            num2 = personas.index(golpeado[0])
+            life = int(vida[num2].split('h')[0])
+            barra = vida[num2].split()[1]
+            if life > 0:
+                life = life - golpe
+                if life > 9999:
+                    barra = "██████████"
+                if life > 8999 and life < 9999:
+                    barra = " █████████░"
+                if life > 7999 and life < 8999:
+                    barra = " ████████░░"
+                if life > 6999 and life < 7999:
+                    barra = " ███████░░░"
+                if life > 5999 and life < 6999:
+                    barra = " ██████░░░░"
+                if life > 4999 and life < 5999:
+                    barra = " █████░░░░░"
+                if life > 3999 and life < 4999:
+                    barra = " ████░░░░░░"
+                if life > 2999 and life < 3999:
+                    barra = " ███░░░░░░░"
+                if life > 1999 and life < 2999:
+                    barra = " ██░░░░░░░░"
+                if life > 999 and life < 1999:  
+                    barra = " █░░░░░░░░░"
+                if life < 0:
+                    barra = " ░░░░░░░░░░"
+                    life = 0
+            else:
+                context.bot.send_message(chat_id=update.effective_chat.id, text = "Ya está muerto. )=")
+            newvida = vida[num2].replace(vida[num2].split('h')[0],str(life))
+            newvida = newvida.replace(vida[num2].split()[1],barra)
+            vida[num2]=newvida
+        context.bot.sendAnimation(chat_id = update.effective_chat.id, animation = resultado_hit[num][0], caption = "{} ha golpeado a {} y le hizo {} de daño!".format(nombre,golpeado[0],golpe))
         print("Hit acabado.")
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la persona crack.")
@@ -180,9 +180,11 @@ def ball(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text = "Falta la pregunta crack.")
 
 def pvida(update, context):
-    vidas = "{}=    {}\n{}=     {}\n{}=     {}\n{}=   {}\n{}=    {}\n{}=    {}\n{}=      {}\n{}=    {}\n{}=  {}\n{}=  {}\n{}=  {}\n{}=        {}\n{}= {}\n{}=    {}\n{}= {}\n{}=   {}\n{}=       {}\n{}=      {}\n{}=    {}\n".format(personas[0],vida[0], personas[1],vida[1],personas[2],vida[2],personas[3],vida[3],personas[4],vida[4],personas[5],vida[5],personas[6],vida[6],personas[7],vida[7], personas[8],vida[8], personas[9],vida[9],personas[10],vida[10],personas[11],vida[11],personas[12],vida[12],personas[13],vida[13],personas[14],vida[14],personas[15],vida[15], personas[16],vida[16],personas[17],vida[17],personas[18],vida[18])
-    context.bot.send_message(chat_id=update.effective_chat.id, text = vidas)
-    print("pvida acabado.")
+    if len(vida)!=0:
+        vidas = "{}=    {}\n{}=     {}\n{}=     {}\n{}=   {}\n{}=    {}\n{}=    {}\n{}=      {}\n{}=    {}\n{}=  {}\n{}=  {}\n{}=  {}\n{}=        {}\n{}= {}\n{}=    {}\n{}= {}\n{}=   {}\n{}=       {}\n{}=      {}\n{}=    {}\n".format(personas[0],vida[0], personas[1],vida[1],personas[2],vida[2],personas[3],vida[3],personas[4],vida[4],personas[5],vida[5],personas[6],vida[6],personas[7],vida[7], personas[8],vida[8], personas[9],vida[9],personas[10],vida[10],personas[11],vida[11],personas[12],vida[12],personas[13],vida[13],personas[14],vida[14],personas[15],vida[15], personas[16],vida[16],personas[17],vida[17],personas[18],vida[18])
+        context.bot.send_message(chat_id=update.effective_chat.id, text = vidas)
+    else:
+        context.bot.send_message(chat_id=update.effective_chat.id, text = "Usa el comando /reset primero plz. (=")
 
 def reset(update, context):
     cont = 0
@@ -194,13 +196,14 @@ def reset(update, context):
     vidas = "{}=    {}\n{}=     {}\n{}=     {}\n{}=   {}\n{}=    {}\n{}=    {}\n{}=      {}\n{}=    {}\n{}=  {}\n{}=  {}\n{}=  {}\n{}=        {}\n{}= {}\n{}=    {}\n{}= {}\n{}=   {}\n{}=       {}\n{}=      {}\n{}=    {}\n".format(personas[0],vida[0], personas[1],vida[1],personas[2],vida[2],personas[3],vida[3],personas[4],vida[4],personas[5],vida[5],personas[6],vida[6],personas[7],vida[7], personas[8],vida[8], personas[9],vida[9],personas[10],vida[10],personas[11],vida[11],personas[12],vida[12],personas[13],vida[13],personas[14],vida[14],personas[15],vida[15], personas[16],vida[16],personas[17],vida[17],personas[18],vida[18])
     context.bot.send_message(chat_id=update.effective_chat.id, text = vidas)
     print("Reset acabado.")
-'''
-def duel(update, context):
-    nombre = update.message.from_user.first_name
-    golpeado = context.args
-    context.bot.send_message(chat_id = update.effective_chat.id, caption = "{} ha retado a un duelo a {}!".format(nombre,personas[num2]))
-'''
+
+def duel(update, context):  
+    #nombre = update.message.from_user.first_name
+    #golpeado = context.args
+    #context.bot.send_message(chat_id = update.effective_chat.id, caption = "{} ha retado a un duelo a {}!".format(nombre,personas[num2]))
+    pass
 ## Handler
+
 start_handler = CommandHandler('start',start)
 dispatcher.add_handler(start_handler)
 
@@ -248,6 +251,9 @@ dispatcher.add_handler(pvida_handler)
 
 reset_handler = CommandHandler('reset',reset)
 dispatcher.add_handler(reset_handler)
+
+duel_handler = CommandHandler('duel',duel)
+dispatcher.add_handler(duel_handler)
 
 unknown_handler = MessageHandler (Filters.command,unknown)
 dispatcher.add_handler(unknown_handler)
