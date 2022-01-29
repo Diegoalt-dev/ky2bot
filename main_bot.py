@@ -204,10 +204,10 @@ def reset(update, context):
 
     
 def video(update,context):
-    link = update.message.text
+    link = context.args
     print("link: "+ link)
     context.bot.sendVideo(chat_id=update.effective_chat.id, video=link)
-    
+
 '''
 def duel(update, context):  
     nombre = update.message.from_user.first_name
