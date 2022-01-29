@@ -204,9 +204,10 @@ def reset(update, context):
 
     
 def video(update,context):
-    link = context.args
+    argms = context.args
+    link = argms[0]
     print("link: "+ link)
-    context.bot.sendVideo(chat_id=update.effective_chat.id, video=link[0])
+    context.bot.sendVideo(chat_id=update.effective_chat.id, video=link)
 
 '''
 def duel(update, context):  
