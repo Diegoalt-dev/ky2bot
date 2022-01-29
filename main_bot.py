@@ -201,6 +201,13 @@ def reset(update, context):
     vidas = "{}=    {}\n{}=     {}\n{}=     {}\n{}=   {}\n{}=    {}\n{}=    {}\n{}=      {}\n{}=    {}\n{}=  {}\n{}=  {}\n{}=  {}\n{}=        {}\n{}= {}\n{}=    {}\n{}= {}\n{}=   {}\n{}=       {}\n{}=      {}\n{}=    {}\n".format(personas[0],vida[0], personas[1],vida[1],personas[2],vida[2],personas[3],vida[3],personas[4],vida[4],personas[5],vida[5],personas[6],vida[6],personas[7],vida[7], personas[8],vida[8], personas[9],vida[9],personas[10],vida[10],personas[11],vida[11],personas[12],vida[12],personas[13],vida[13],personas[14],vida[14],personas[15],vida[15], personas[16],vida[16],personas[17],vida[17],personas[18],vida[18])
     context.bot.send_message(chat_id=update.effective_chat.id, text = vidas)
     print("Reset acabado.")
+
+    
+def video(update,context):
+    link = update.message.text
+    print("link: "+ link)
+    context.bot.sendVideo(chat_id=update.effective_chat.id, video=link)
+    
 '''
 def duel(update, context):  
     nombre = update.message.from_user.first_name
@@ -256,6 +263,10 @@ dispatcher.add_handler(pvida_handler)
 
 reset_handler = CommandHandler('reset',reset)
 dispatcher.add_handler(reset_handler)
+
+video_handler = CommandHandler('video',video)
+dispatcher.add_handler(video_handler)
+
 '''
 duel_handler = CommandHandler('duel',duel)
 dispatcher.add_handler(duel_handler)
