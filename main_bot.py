@@ -70,6 +70,7 @@ def lista_miembros(update, context):
 def gei(update,context):
     miembro = random.randint(0,len(personas)-1)
     respuesta = '{} es gei'.format(personas[miembro])
+    print("personas: ", personas)
     context.bot.send_message(chat_id=update.effective_chat.id, text = respuesta)
 
 def lol(update, context):
