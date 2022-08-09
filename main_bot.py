@@ -36,7 +36,7 @@ resp_pablo_data = ["No podría estar más de acuerdo","Me parece un excelente ar
 miembros = []
 global vida
 vida = []
-personas = ["Alvaro", "Diego", "Guaro", "Jessica", "Camilo", "Camila", "Risca", "Miguel", "PabloG", "PabloS", "PabloN", "Santi", "Fernando", "Samuel", "Valentina", "MariaP", "Paisa", "Julian", "ky2bot"]
+personas = ["Alvaro", "Diego", "Guaro", "Jessica", "Camilo", "Camila", "Risca", "Miguel", "PabloG", "PabloS", "PabloN", "Santi", "Fernando", "Samuel", "MariaP", "Paisa", "Julian", "ky2bot"]
 bola8 = ["En mi opinión, sí","Es cierto","Probablemente","Todo apunta a que sí","Sin duda","Si","Definitivamente","Pregunta en otro momento", "Intenta de nuevo","Será mejor que no te lo diga ahora","No puedo predecirlo ahora","Puede ser","No cuentes con ello","No","Muy dudoso","Mis fuentes me dicen que no","Las perspectivas no son buenas"]
 frases = ["No hay jungla.", "mancos todos.","Paisa carreenos.", "no vuelvo a venirme con Fabio support.", "Diego regaló la partida otra vez.", "gg no team.", "Cómprense un par de manos mancos hptas.", "Montaña es el peor mid del mundo.", "Vallejo otra vez en farm simulator."]
 
